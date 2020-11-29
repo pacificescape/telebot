@@ -13,6 +13,9 @@ type HandlerFunc func(Context) error
 // Context represents a context of the current event. It stores data
 // depending on its type, whether it's a message, callback or whatever.
 type Context interface {
+	// Bot returns bot instance
+	Bot() *Bot
+
 	// Message returns stored message if such presented.
 	Message() *Message
 
@@ -133,6 +136,10 @@ type nativeContext struct {
 	preCheckoutQuery   *PreCheckoutQuery
 	poll               *Poll
 	pollAnswer         *PollAnswer
+}
+
+func (c *nativeContext) Bot() *Bot {
+	return c.b
 }
 
 func (c *nativeContext) Message() *Message {
